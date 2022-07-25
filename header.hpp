@@ -3,6 +3,11 @@
 
 #include <cstdlib>
 #include <iostream>
+#include <string>
+
+#include "Card.hpp"
+#include "Symbol.hpp"
+#include "Grid.hpp"
 
 
 

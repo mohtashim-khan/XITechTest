@@ -2,8 +2,9 @@
 
 int main()
 {
+    Card* test = new Card();
 
-    std::cout<<"hello World DEBUG\n";
+    std::cout<<test->test << "\n";
 
     
 }

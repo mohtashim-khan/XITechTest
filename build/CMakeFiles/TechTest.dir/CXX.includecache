@@ -6,11 +6,27 @@
 
 #IncludeRegexTransform: 
 
+/home/mohtashim/techTestXITech/techTest/Card.hpp
+header.hpp
+/home/mohtashim/techTestXITech/techTest/header.hpp
+
+/home/mohtashim/techTestXITech/techTest/Grid.hpp
+
+/home/mohtashim/techTestXITech/techTest/Symbol.hpp
+
 /home/mohtashim/techTestXITech/techTest/header.hpp
 cstdlib
 -
 iostream
 -
+string
+-
+Card.hpp
+/home/mohtashim/techTestXITech/techTest/Card.hpp
+Symbol.hpp
+/home/mohtashim/techTestXITech/techTest/Symbol.hpp
+Grid.hpp
+/home/mohtashim/techTestXITech/techTest/Grid.hpp
 
 /home/mohtashim/techTestXITech/techTest/main.cpp
 header.hpp
