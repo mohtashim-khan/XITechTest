@@ -1,0 +1,18 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/mohtashim/techTestXITech/techTest/header.hpp
+cstdlib
+-
+iostream
+-
+
+/home/mohtashim/techTestXITech/techTest/main.cpp
+header.hpp
+/home/mohtashim/techTestXITech/techTest/header.hpp
+
