@@ -14,8 +14,10 @@ int main()
 
     Grid *partAGrid = new Grid(partA_args, 2);
 
-    partAGrid->solve();
-    partAGrid->print();
+    partAGrid->solve2D();
+
+
+
 
 
 
@@ -32,6 +34,7 @@ int main()
     // partB_args.push_back(new Card(SINGLETRIANGLETOP, DOUBLEARROWTOP, SINGLETRIANGLETOP, SINGLEARROWBOTTOM, 8));
     // partB_args.push_back(new Card(SINGLEARROWBOTTOM, DOUBLEARROWTOP, DOUBLETRIANGLETOP, SINGLETRIANGLEBOTTOM, 9));
 
+    return EXIT_SUCCESS;
 
 
 

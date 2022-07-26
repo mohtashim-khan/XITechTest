@@ -14,7 +14,9 @@ class Grid
     Grid(std::vector<Card*> &cards, int n);
     
     void print();
-    void solve();
+    void solve2D();
+    void advanceCardPosition(int &rowIndex, int &colIndex);
+    bool insideCornersMatch(int row, int col);
 
 
 

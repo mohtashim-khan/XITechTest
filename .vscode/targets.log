@@ -1,0 +1,276 @@
+make all --print-data-base --no-builtin-variables --no-builtin-rules --question
+make: *** No rule to make target 'all'.  Stop.
+
+# GNU Make 4.3
+# Built for x86_64-pc-linux-gnu
+# Copyright (C) 1988-2020 Free Software Foundation, Inc.
+# License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>
+# This is free software: you are free to change and redistribute it.
+# There is NO WARRANTY, to the extent permitted by law.
+
+# Make data base, printed on Tue Jul 26 11:36:01 2022
+
+# Variables
+
+# environment
+GDK_BACKEND = x11
+# environment
+LC_ALL = C
+# environment
+GTK_RC_FILES = /etc/gtk/gtkrc:/home/mohtashim/.gtkrc:/home/mohtashim/.config/gtkrc
+# environment
+VSCODE_CWD = /home/mohtashim
+# default
+MAKE_COMMAND := make
+# environment
+QT_ACCESSIBILITY = 1
+# automatic
+@D = $(patsubst %/,%,$(dir $@))
+# environment
+VSCODE_HANDLES_UNCAUGHT_ERRORS = true
+# default
+.VARIABLES := 
+# environment
+PWD = /home/mohtashim/techTestXITech/techTest
+# automatic
+%D = $(patsubst %/,%,$(dir $%))
+# environment
+XDG_DATA_DIRS = /usr/share/plasma:/usr/local/share:/usr/share:/var/lib/snapd/desktop
+# automatic
+^D = $(patsubst %/,%,$(dir $^))
+# automatic
+%F = $(notdir $%)
+# environment
+VSCODE_CODE_CACHE_PATH = /home/mohtashim/.config/Code/CachedData/3b889b090b5ad5793f524b5d1d39fda662b96a2a
+# environment
+XDG_SESSION_PATH = /org/freedesktop/DisplayManager/Session1
+# environment
+LANG = C
+# environment
+XAUTHORITY = /home/mohtashim/.Xauthority
+# default
+.LOADED := 
+# default
+.INCLUDE_DIRS = /usr/local/include /usr/include /usr/include
+# makefile
+MAKEFLAGS = pqrR
+# makefile
+CURDIR := /home/mohtashim/techTestXITech/techTest
+# environment
+APPLICATION_INSIGHTS_NO_DIAGNOSTIC_CHANNEL = true
+# environment
+LESSOPEN = | /usr/bin/lesspipe %s
+# automatic
+*D = $(patsubst %/,%,$(dir $*))
+# environment
+PAM_KWALLET5_LOGIN = /run/user/1000/kwallet5.socket
+# environment
+MFLAGS = -pqrR
+# environment
+SSH_AUTH_SOCK = /tmp/ssh-g9Uj6ot5iS6v/agent.4275
+# default
+.SHELLFLAGS := -c
+# environment
+XDG_CONFIG_DIRS = /etc/xdg/xdg-plasma:/etc/xdg:/usr/share/kubuntu-default-settings/kf5-settings
+# automatic
++D = $(patsubst %/,%,$(dir $+))
+# environment
+XCURSOR_THEME = breeze_cursors
+# environment
+XDG_SESSION_DESKTOP = KDE
+# makefile
+MAKEFILE_LIST := 
+# automatic
+@F = $(notdir $@)
+# environment
+VSCODE_PID = 5633
+# environment
+XDG_SESSION_TYPE = x11
+# automatic
+?D = $(patsubst %/,%,$(dir $?))
+# environment
+SESSION_MANAGER = local/mohtashim-Swift-SF314-42:@/tmp/.ICE-unix/4628,unix/mohtashim-Swift-SF314-42:/tmp/.ICE-unix/4628
+# automatic
+*F = $(notdir $*)
+# environment
+CHROME_DESKTOP = code-url-handler.desktop
+# environment
+DBUS_SESSION_BUS_ADDRESS = unix:path=/run/user/1000/bus
+# automatic
+<D = $(patsubst %/,%,$(dir $<))
+# environment
+VSCODE_NLS_CONFIG = {"locale":"en-gb","availableLanguages":{},"_languagePackSupport":true}
+# default
+MAKE_HOST := x86_64-pc-linux-gnu
+# makefile
+SHELL = /bin/sh
+# default
+MAKECMDGOALS := all
+# environment
+XMODIFIERS = @im=ibus
+# environment
+SHLVL = 0
+# environment
+MAKELEVEL := 0
+# default
+MAKE = $(MAKE_COMMAND)
+# environment
+PATH = /home/mohtashim/.local/bin:/home/mohtashim/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin
+# default
+MAKEFILES := 
+# environment
+LANGUAGE = en_CA:en
+# automatic
+^F = $(notdir $^)
+# environment
+LESSCLOSE = /usr/bin/lesspipe %s %s
+# automatic
+?F = $(notdir $?)
+# environment
+KDE_APPLICATIONS_AS_SCOPE = 1
+# environment
+XDG_SEAT = seat0
+# environment
+GTK_IM_MODULE = ibus
+# environment
+XDG_CURRENT_DESKTOP = KDE
+# environment
+LS_COLORS = 
+# automatic
++F = $(notdir $+)
+# environment
+XDG_SEAT_PATH = /org/freedesktop/DisplayManager/Seat0
+# environment
+DESKTOP_SESSION = plasma
+# environment
+ORIGINAL_XDG_CURRENT_DESKTOP = KDE
+# 'override' directive
+GNUMAKEFLAGS := 
+# environment
+QT_SCREEN_SCALE_FACTORS = eDP=1.25;HDMI-A-0=1.25;DisplayPort-0=1.25;
+# environment
+CLUTTER_IM_MODULE = ibus
+# environment
+LOGNAME = mohtashim
+# environment
+XDG_VTNR = 1
+# makefile
+.DEFAULT_GOAL := 
+# environment
+DISPLAY = :0
+# environment
+USER = mohtashim
+# default
+MAKE_VERSION := 4.3
+# environment
+KDE_SESSION_UID = 1000
+# environment
+SSH_AGENT_PID = 4380
+# environment
+_ = /usr/share/code/code
+# environment
+XDG_RUNTIME_DIR = /run/user/1000
+# environment
+GPG_AGENT_INFO = /run/user/1000/gnupg/S.gpg-agent:0:1
+# environment
+XDG_SESSION_CLASS = user
+# environment
+VSCODE_AMD_ENTRYPOINT = vs/workbench/api/node/extensionHostProcess
+# environment
+GTK2_RC_FILES = /etc/gtk-2.0/gtkrc:/home/mohtashim/.gtkrc-2.0:/home/mohtashim/.config/gtkrc-2.0
+# environment
+HOME = /home/mohtashim
+# environment
+QT_IM_MODULE = ibus
+# environment
+ELECTRON_RUN_AS_NODE = 1
+# environment
+VSCODE_IPC_HOOK = /run/user/1000/vscode-2a3a0f3c-1.69.2-main.sock
+# environment
+XDG_SESSION_ID = 3
+# environment
+XCURSOR_SIZE = 24
+# default
+.RECIPEPREFIX := 
+# automatic
+<F = $(notdir $<)
+# default
+SUFFIXES := 
+# environment
+QT_AUTO_SCREEN_SCALE_FACTOR = 0
+# environment
+KDE_SESSION_VERSION = 5
+# default
+.FEATURES := target-specific order-only second-expansion else-if shortest-stem undefine oneshell nocomment grouped-target extra-prereqs archives jobserver output-sync check-symlink load
+# environment
+KDE_FULL_SESSION = true
+# variable set hash-table stats:
+# Load=96/1024=9%, Rehash=0, Collisions=1/123=1%
+
+# Pattern-specific Variable Values
+
+# No pattern-specific variable values.
+
+# Directories
+
+# . (device 66309, inode 3852141): 13 files, no impossibilities.
+
+# 13 files, no impossibilities in 1 directories.
+
+# Implicit Rules
+
+# No implicit rules.
+
+# Files
+
+# Not a target:
+Makefile:
+#  Implicit rule search has been done.
+#  File does not exist.
+#  File has been updated.
+#  Failed to be updated.
+
+# Not a target:
+.DEFAULT:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+# Not a target:
+all:
+#  Command line target.
+#  Implicit rule search has been done.
+#  File does not exist.
+#  File has not been updated.
+
+# Not a target:
+makefile:
+#  Implicit rule search has been done.
+#  File does not exist.
+#  File has been updated.
+#  Failed to be updated.
+
+# Not a target:
+GNUmakefile:
+#  Implicit rule search has been done.
+#  File does not exist.
+#  File has been updated.
+#  Failed to be updated.
+
+# files hash-table stats:
+# Load=6/1024=1%, Rehash=0, Collisions=0/15=0%
+# VPATH Search Paths
+
+# No 'vpath' search paths.
+
+# No general ('VPATH' variable) search path.
+
+# strcache buffers: 1 (0) / strings = 21 / storage = 191 B / avg = 9 B
+# current buf: size = 8162 B / used = 191 B / count = 21 / avg = 9 B
+
+# strcache performance: lookups = 24 / hit rate = 12%
+# hash-table stats:
+# Load=21/8192=0%, Rehash=0, Collisions=0/24=0%
+# Finished Make data base on Tue Jul 26 11:36:01 2022
+
+ 

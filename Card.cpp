@@ -23,3 +23,43 @@ void Card::printPositions()
         std::cout << pos << " ";
     std::cout << "\n";
 }
+
+SymbolTypes Card :: oppositeSymbol(SymbolTypes symbol)
+{
+    switch(symbol)
+    {
+        case DOUBLETRIANGLETOP:
+            return DOUBLETRIANGLEBOTTOM;
+            break;
+
+        case DOUBLETRIANGLEBOTTOM:
+            return DOUBLETRIANGLETOP;
+            break;
+        
+        case SINGLETRIANGLETOP:
+            return SINGLETRIANGLEBOTTOM;
+            break;
+        
+        case SINGLETRIANGLEBOTTOM:
+            return SINGLETRIANGLETOP;
+            break;
+
+        case DOUBLEARROWTOP:
+            return DOUBLEARROWBOTTOM;
+            break;
+
+        case DOUBLEARROWBOTTOM:
+            return DOUBLEARROWTOP;
+            break;
+        
+        case SINGLEARROWTOP:
+            return SINGLEARROWBOTTOM;
+            break;
+        
+        case SINGLEARROWBOTTOM:
+            return SINGLEARROWTOP;
+            break;
+    }
+
+    return DOUBLEARROWBOTTOM;
+}
