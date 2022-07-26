@@ -4,9 +4,10 @@
 #include <cstdlib>
 #include <iostream>
 #include <string>
+#include <vector>
+#include <algorithm>
 
 #include "Card.hpp"
-#include "Symbol.hpp"
 #include "Grid.hpp"
 
 
