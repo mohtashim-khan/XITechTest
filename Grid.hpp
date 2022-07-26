@@ -20,7 +20,6 @@ class Grid
 
     int size;
     std::vector<std::vector<Card*>> grid;
-    std::vector<std::vector<Card*>> grid;
     
 };
 

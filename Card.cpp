@@ -10,3 +10,16 @@ Card::Card(SymbolTypes top, SymbolTypes right, SymbolTypes bottom, SymbolTypes l
 
     cardID = id;
 }
+
+void Card::rotateClockWise()
+{
+    std::rotate(symbolPositions.rbegin(), symbolPositions.rbegin() + 1, symbolPositions.rend());
+    rotationCount++;
+}
+
+void Card::printPositions()
+{
+    for (auto &pos : symbolPositions)
+        std::cout << pos << " ";
+    std::cout << "\n";
+}

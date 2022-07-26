@@ -25,19 +25,26 @@ Grid::Grid(std::vector<Card*> &cards, int n)
 
 void Grid::print()
 {
-    for (auto & row : grid)
+    for (auto &row : grid)
     {
         for(auto &card : row)
         {
-            std::cout << "Card " << card->cardID <<" ";
+            std::cout << "Card " << card->cardID;
 
             if(card->rotationCount > 0)
             {
-                std::cout << " Rotated Clockwise :" << card->rotationCount << " times ";
+                std::cout << "(Rotated Clockwise:" << card->rotationCount <<")";
             }
+
+            std::cout <<"\t";
         }
 
         std::cout<<"\n";
 
     }
+}
+
+void Grid::solve()
+{
+    
 }
