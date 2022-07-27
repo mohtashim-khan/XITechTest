@@ -24,8 +24,11 @@ void Card::printPositions()
     std::cout << "\n";
 }
 
-SymbolTypes Card :: oppositeSymbol(SymbolTypes symbol)
+SymbolTypes Card :: oppositeSymbol(Directions direction)
 {
+
+    SymbolTypes symbol = symbolPositions[direction];
+    
     switch(symbol)
     {
         case DOUBLETRIANGLETOP:

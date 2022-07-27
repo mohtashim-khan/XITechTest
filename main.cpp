@@ -14,7 +14,7 @@ int main()
 
     Grid *partAGrid = new Grid(partA_args, 2);
 
-    partAGrid->solve2D();
+    partAGrid->solve();
 
 
 

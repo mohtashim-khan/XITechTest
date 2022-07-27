@@ -75,16 +75,16 @@ bool Grid::insideCornersMatch(int row, int col)
     Card *leftCard = (0 <= col - 1) ? grid[row][col - 1] : nullptr;
     Card *rightCard = (col + 1 < grid[row].size()) ? grid[row][col + 1] : nullptr;
 
-    if (topCard && topCard->symbolPositions[BOTTOM] != currentCard->symbolPositions[TOP])
+    if (topCard && topCard->oppositeSymbol(BOTTOM) != currentCard->symbolPositions[TOP])
         return false;
 
-    if (bottomCard && bottomCard->symbolPositions[TOP] != currentCard->symbolPositions[BOTTOM])
+    if (bottomCard && bottomCard->oppositeSymbol(TOP) != currentCard->symbolPositions[BOTTOM])
         return false;
 
-    if (leftCard && leftCard->symbolPositions[RIGHT] != currentCard->symbolPositions[LEFT])
+    if (leftCard && leftCard->oppositeSymbol(RIGHT) != currentCard->symbolPositions[LEFT])
         return false;
 
-    if (rightCard && rightCard->symbolPositions[LEFT] != currentCard->symbolPositions[RIGHT])
+    if (rightCard && rightCard->oppositeSymbol(LEFT) != currentCard->symbolPositions[RIGHT])
         return false;
 
     return true;
@@ -104,11 +104,11 @@ bool Grid::insideCornersMatch(int row, int col)
 
             -Swap card with the next card position.
 
-        -keep repeating the above algo until all card positions are checked (total of 4! = 24 possible positions, we can check this by having the loop break when the set size == 24)
+        -keep repeating the above algo until all card positions are checked
 
 */
 
-void Grid::solve2D()
+void Grid::solve()
 {
     for (int row = 0; row < grid.size(); row++)
     {
@@ -116,30 +116,24 @@ void Grid::solve2D()
         {
             int rowIndex = row;
             int colIndex = col;
-            int advanceCount = 0;
 
-            int oppositeRowIndex = (rowIndex == 0) ? 1 : 0;
-            int oppositeColIndex = (colIndex == 0) ? 1 : 0;
-
-            // Check Opposite Inside Corners
-            while (!insideCornersMatch(oppositeRowIndex, oppositeColIndex) && advanceCount < 4)
+            // print if inside corners match and rotate
+            for (int i = 0; i < 4; i++)
             {
-                advanceCardPosition(rowIndex, colIndex);
-                advanceCount++;
-            }
+                int oppositeRowIndex = (rowIndex == 0) ? 1 : 0;
+                int oppositeColIndex = (colIndex == 0) ? 1 : 0;
 
-            // Perform Rotations
-            if (advanceCount < 4)
-            {
-                // print if inside corners match and rotate
-                for (int i = 0; i < 4; i++)
+                // Check Opposite Inside Corners
+                if (!insideCornersMatch(oppositeRowIndex, oppositeColIndex))
                 {
-                    if (insideCornersMatch(rowIndex, colIndex))
-                        print();
-
-                    grid[rowIndex][colIndex]->rotateClockWise();
+                    
                 }
+                if (insideCornersMatch(rowIndex, colIndex))
+                    print();
+
+                grid[rowIndex][colIndex]->rotateClockWise();
             }
         }
     }
 }
+

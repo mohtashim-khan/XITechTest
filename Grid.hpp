@@ -14,13 +14,14 @@ class Grid
     Grid(std::vector<Card*> &cards, int n);
     
     void print();
-    void solve2D();
+    void solve();
     void advanceCardPosition(int &rowIndex, int &colIndex);
     bool insideCornersMatch(int row, int col);
 
 
 
     int size;
+    std::vector<Card*> availableCards;
     std::vector<std::vector<Card*>> grid;
     
 };

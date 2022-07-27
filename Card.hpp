@@ -39,7 +39,7 @@ class Card
 
     void printPositions();
 
-    SymbolTypes oppositeSymbol(SymbolTypes symbol);
+    SymbolTypes oppositeSymbol(Directions direction);
 
 
     std::vector<SymbolTypes> symbolPositions; //Top - 0, Right - 1, Bottom - 2, Left -3
