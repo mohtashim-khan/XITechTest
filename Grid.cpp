@@ -1,29 +1,21 @@
 #include "Grid.hpp"
-#include <unordered_set>
 
 Grid::Grid(std::vector<Card *> &cards, int n)
 {
-    if (cards.size() != n * n)
+    totalCards = n * n;
+    if (cards.size() != totalCards)
     {
         std::cout << "# of cards != n*n therefore cannot make square grid \n";
         exit(EXIT_FAILURE);
     }
 
-    int cardsCounter = 0;
-
-    for (int i = 0; i < n; i++)
-    {
-        grid.push_back(std::vector<Card *>());
-
-        for (int j = 0; j < n; j++)
-        {
-            grid[i].push_back(cards[cardsCounter]);
-            cardsCounter++;
-        }
-    }
+    grid = std::vector<std::vector<Card *>>(n, std::vector<Card *>(n)); // Make empty nxn grid.
+    sideSize = n;
+    availableCards = cards;
+    fillSymbolMap();
 }
 
-void Grid::print()
+void Grid::printGrid()
 {
     for (auto &row : grid)
     {
@@ -43,33 +35,19 @@ void Grid::print()
     }
 }
 
-void Grid ::advanceCardPosition(int &rowIndex, int &colIndex)
+void Grid ::fillSymbolMap()
 {
-    int oldCol = colIndex;
-    int oldRow = rowIndex;
-
-    grid[rowIndex][colIndex]->rotationCount = 0; // reset Rotation count for card
-
-    if (colIndex == grid[rowIndex].size() - 1)
+    for (auto &card : availableCards)
     {
-        colIndex = 0;
-
-        if (rowIndex == grid.size() - 1)
-            rowIndex = 0;
-        else
-            rowIndex++;
+        for (auto &symbol : card->symbolPositions)
+        {
+            symbolMap[symbol].push_back(card);
+        }
     }
-    else
-    {
-        colIndex++;
-    }
-
-    std::swap(grid[oldRow][oldCol], grid[rowIndex][colIndex]);
 }
 
-bool Grid::insideCornersMatch(int row, int col)
+bool Grid::insideCornersMatch(Card *currentCard, int row, int col)
 {
-    Card *currentCard = grid[row][col];
     Card *bottomCard = (row + 1 < grid.size()) ? grid[row + 1][col] : nullptr;
     Card *topCard = (0 <= row - 1) ? grid[row - 1][col] : nullptr;
     Card *leftCard = (0 <= col - 1) ? grid[row][col - 1] : nullptr;
@@ -90,50 +68,113 @@ bool Grid::insideCornersMatch(int row, int col)
     return true;
 }
 
-/*
-
-    Will have to check each block in every position and rotation to see if it is a valid solution,
-    an effecient way to do this is to check the opposite inside corners for every position for the block to see if we can dismiss the position even before performing the rotations
-    saving on 4 card rotations.
-
-    In Order:
-
-        -for a card in a position in the grid,
-            -check opposite inside corners, if corners are matching
-                -perform rotations on card and adding/printing any valid solutions
-
-            -Swap card with the next card position.
-
-        -keep repeating the above algo until all card positions are checked
-
-*/
-
-void Grid::solve()
+std::vector<Card *> Grid::findPotentialMatches(int row, int col)
 {
-    for (int row = 0; row < grid.size(); row++)
+    Card *bottomCard = (row + 1 < grid.size()) ? grid[row + 1][col] : nullptr;
+    Card *topCard = (0 <= row - 1) ? grid[row - 1][col] : nullptr;
+    Card *leftCard = (0 <= col - 1) ? grid[row][col - 1] : nullptr;
+    Card *rightCard = (col + 1 < grid[row].size()) ? grid[row][col + 1] : nullptr;
+
+    if (topCard)
     {
-        for (int col = 0; col < grid[row].size(); col++)
+    }
+}
+
+void Grid ::addToGrid(Card *card, int row, int col)
+{
+    grid[row][col] = card;
+    usedCards.insert(card);
+}
+
+void Grid ::incrementRowAndCol(int &row, int &col)
+{
+    col++;
+    if (col >= sideSize)
+    {
+        col = 0;
+        row++;
+        if (row >= sideSize)
+            row = 0;
+    }
+}
+
+void Grid ::resetGrid(int &row, int &col)
+{
+    for (int i = 0; i < grid.size(); i++)
+    {
+        for (int j = 0; j < grid[i].size(); j++)
         {
-            int rowIndex = row;
-            int colIndex = col;
+            if (grid[i][j])
+                grid[i][j]->reset();
 
-            // print if inside corners match and rotate
-            for (int i = 0; i < 4; i++)
+            grid[i][j] = nullptr;
+        }
+    }
+    usedCards.clear();
+    row = 0;
+    col = 0;
+}
+
+void Grid ::fillGrid(int row, int col)
+{
+    if(usedCards.size() == totalCards)
+        return;
+    
+    
+    
+    
+    
+    
+    while (usedCards.size() != totalCards) // while all available cards are not used
+    {
+        std::vector<Card *> matches = findPotentialMatches();
+
+        if (matches.empty())
+            break;
+
+        for (auto &match : matches)
+        {
+
+            for (int matchRotation = 0; matchRotation < 4; matchRotation++)
             {
-                int oppositeRowIndex = (rowIndex == 0) ? 1 : 0;
-                int oppositeColIndex = (colIndex == 0) ? 1 : 0;
-
-                // Check Opposite Inside Corners
-                if (!insideCornersMatch(oppositeRowIndex, oppositeColIndex))
+                if (insideCornersMatch(match))
                 {
-                    
+                    addToGrid(match);
+                    break;
                 }
-                if (insideCornersMatch(rowIndex, colIndex))
-                    print();
 
-                grid[rowIndex][colIndex]->rotateClockWise();
+                match->rotateClockWise(1);
             }
         }
     }
 }
 
+/*
+    For each available card in each rotation, add it as the main initial card which will be located at 0,0.
+    After adding the main card, match the rest of the cards with the symbols on the main card in order, for example the next card will be added at 0,1 and will
+
+*/
+void Grid::solve()
+{
+    int row = 0;
+    int col = 0;
+
+    for (auto &card : availableCards)
+    {
+        for (int rotation = 0; rotation < 4; rotation++)
+        {
+            addToGrid(card, row, col);
+            incrementRowAndCol(row, col);
+
+            fillGrid(row, col);
+
+            if (usedCards.size() == totalCards)
+                printGrid();
+
+            resetGrid(row, col);
+            card->rotateClockWise(1);
+        }
+
+        resetGrid(row, col);
+    }
+}
