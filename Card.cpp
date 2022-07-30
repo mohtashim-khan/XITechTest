@@ -11,10 +11,23 @@ Card::Card(SymbolTypes top, SymbolTypes right, SymbolTypes bottom, SymbolTypes l
     cardID = id;
 }
 
-void Card::rotateClockWise()
+void Card::rotateClockWise(int n)
 {
-    std::rotate(symbolPositions.rbegin(), symbolPositions.rbegin() + 1, symbolPositions.rend());
-    rotationCount++;
+    while (n > 3)
+    {
+        n-=4;
+    }
+
+    std::rotate(symbolPositions.rbegin(), symbolPositions.rbegin() + n, symbolPositions.rend());
+    rotationCount = (rotationCount >= 3) ? 0 : rotationCount+1;
+
+
+}
+
+void Card::reset()
+{
+    std::rotate(symbolPositions.begin(), symbolPositions.begin() + rotationCount, symbolPositions.end());
+    rotationCount = 0;
 }
 
 void Card::printPositions()
