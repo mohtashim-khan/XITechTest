@@ -18,24 +18,21 @@ class Grid
 
 
     private:
-    void printGrid();
+    void printGrid(std::vector<std::vector<Card*>> &grid);
     void incrementRowAndCol(int &row, int &col);
-    void addToGrid(Card *card, int row, int col);
-    void resetGrid(int &row, int &col);
+    void addToGrid(Card *card, int row, int col, std::vector<std::vector<Card*>> &grid, std::unordered_set<Card*> &usedCards);
+    void resetGrid(int &row, int &col, std::vector<std::vector<Card*>> &grid, std::unordered_set<Card*> &usedCards);
     void fillSymbolMap();
-    void fillGrid(int row, int col);
-    bool insideCornersMatch(Card* currentCard, int row, int col);
-    std::set<Card*> findPotentialMatches(int row, int col);
+    void fillGrid(int row, int col, std::vector<std::vector<Card*>> grid, std::unordered_set<Card*> usedCards);
+    bool insideCornersMatch(Card* currentCard, int row, int col, std::vector<std::vector<Card*>> &grid);
+    std::set<Card*> findPotentialMatches(int row, int col, std::vector<std::vector<Card*>> &grid);
     std::set<Card *> setIntersection(std::set<Card*> &s1, std::set<Card*> &s2);
 
-
-
+    int solutionCount = 0;
     int sideSize;
     int totalCards;
-    std::unordered_set<Card*> usedCards;
     std::unordered_map<SymbolTypes, std::set<Card*>> symbolMap;
     std::set<Card*> availableCards;
-    std::vector<std::vector<Card*>> grid;
     
 };
 

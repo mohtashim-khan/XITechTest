@@ -8,15 +8,17 @@ Grid::Grid(std::set<Card *> &cards, int n)
         std::cout << "# of cards != n*n therefore cannot make square grid \n";
         exit(EXIT_FAILURE);
     }
-
-    grid = std::vector<std::vector<Card *>>(n, std::vector<Card *>(n)); // Make empty nxn grid.
     sideSize = n;
     availableCards = cards;
     fillSymbolMap();
 }
 
-void Grid::printGrid()
+void Grid::printGrid(std::vector<std::vector<Card*>> &grid)
 {
+    solutionCount++;
+
+    std::cout<<"\n\n SOLUTION "<<solutionCount<<" : \n\n";
+
     for (auto &row : grid)
     {
         for (auto &card : row)
@@ -46,7 +48,7 @@ void Grid ::fillSymbolMap()
     }
 }
 
-bool Grid::insideCornersMatch(Card *currentCard, int row, int col)
+bool Grid::insideCornersMatch(Card *currentCard, int row, int col, std::vector<std::vector<Card*>> &grid)
 {
     Card *bottomCard = (row + 1 < grid.size()) ? grid[row + 1][col] : nullptr;
     Card *topCard = (0 <= row - 1) ? grid[row - 1][col] : nullptr;
@@ -68,7 +70,7 @@ bool Grid::insideCornersMatch(Card *currentCard, int row, int col)
     return true;
 }
 
-std::set<Card *> Grid::findPotentialMatches(int row, int col)
+std::set<Card *> Grid::findPotentialMatches(int row, int col, std::vector<std::vector<Card*>> &grid)
 {
     Card *bottomCard = (row + 1 < grid.size()) ? grid[row + 1][col] : nullptr;
     Card *topCard = (0 <= row - 1) ? grid[row - 1][col] : nullptr;
@@ -108,7 +110,7 @@ std::set<Card *> Grid::findPotentialMatches(int row, int col)
     return resSet;
 }
 
-void Grid ::addToGrid(Card *card, int row, int col)
+void Grid ::addToGrid(Card *card, int row, int col, std::vector<std::vector<Card*>> &grid, std::unordered_set<Card*> &usedCards)
 {
     if (grid[row][col] != nullptr)
     {
@@ -131,7 +133,7 @@ void Grid ::incrementRowAndCol(int &row, int &col)
     }
 }
 
-void Grid ::resetGrid(int &row, int &col)
+void Grid ::resetGrid(int &row, int &col, std::vector<std::vector<Card*>> &grid, std::unordered_set<Card*> &usedCards)
 {
     for (int i = 0; i < grid.size(); i++)
     {
@@ -148,15 +150,16 @@ void Grid ::resetGrid(int &row, int &col)
     col = 0;
 }
 
-void Grid ::fillGrid(int row, int col)
+void Grid ::fillGrid(int row, int col, std::vector<std::vector<Card*>> grid, std::unordered_set<Card*> usedCards)
 {
+
     if (usedCards.size() == totalCards) // If all cards are used then this is a valid solution, print out the output
     {
-        printGrid();
+        printGrid(grid);
         return;
     }
 
-    std::set<Card *> matches = findPotentialMatches(row, col);
+    std::set<Card *> matches = findPotentialMatches(row, col, grid);
 
     for (auto &match : matches)
     {
@@ -165,11 +168,12 @@ void Grid ::fillGrid(int row, int col)
 
         for (int matchRotation = 0; matchRotation < 4; matchRotation++)
         {
-            if (insideCornersMatch(match, row, col))
+
+            if (insideCornersMatch(match, row, col, grid))
             {
-                addToGrid(match, row, col);
+                addToGrid(match, row, col, grid, usedCards);
                 incrementRowAndCol(row, col);
-                fillGrid(row, col);
+                fillGrid(row, col, grid, usedCards);
                 break;
             }
 
@@ -190,19 +194,23 @@ void Grid::solve()
 {
     int row = 0;
     int col = 0;
+    std::unordered_set<Card*> usedCards;
+    std::vector<std::vector<Card *>> grid(sideSize, std::vector<Card *>(sideSize)); // Make empty nxn grid
+
+
     for (auto &card : availableCards)
     {
         for (int rotation = 0; rotation < 4; rotation++)
         {
-            addToGrid(card, row, col);
+            addToGrid(card, row, col, grid, usedCards);
             incrementRowAndCol(row, col);
 
-            fillGrid(row, col);
+            fillGrid(row, col, grid, usedCards);
 
-            resetGrid(row, col);
+            resetGrid(row, col, grid, usedCards);
             card->rotateClockWise(1);
         }
 
-        resetGrid(row, col);
+        resetGrid(row, col, grid, usedCards);
     }
 }
