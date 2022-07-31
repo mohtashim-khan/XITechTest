@@ -121,6 +121,18 @@ void Grid ::addToGrid(Card *card, int row, int col, std::vector<std::vector<Card
     usedCards.insert(card);
 }
 
+void Grid ::eraseFromGrid(Card *card, int row, int col, std::vector<std::vector<Card*>> &grid, std::unordered_set<Card*> &usedCards)
+{
+    if (grid[row][col] == nullptr)
+    {
+        std::cerr << "ERROR: ERASING NULL PTR at row: " << row << " col: " << col << "\n";
+        exit(EXIT_FAILURE);
+    }
+    grid[row][col]->reset();
+    grid[row][col] = nullptr;
+    usedCards.erase(card);
+}
+
 void Grid ::incrementRowAndCol(int &row, int &col)
 {
     col++;
@@ -130,6 +142,18 @@ void Grid ::incrementRowAndCol(int &row, int &col)
         row++;
         if (row >= sideSize)
             row = 0;
+    }
+}
+
+void Grid ::decrementRowAndCol(int &row, int &col)
+{
+    col--;
+    if (col < 0)
+    {
+        col = sideSize-1;
+        row--;
+        if (row < 0)
+            row = sideSize-1;
     }
 }
 
@@ -168,12 +192,20 @@ void Grid ::fillGrid(int row, int col, std::vector<std::vector<Card*>> grid, std
 
         for (int matchRotation = 0; matchRotation < 4; matchRotation++)
         {
+            // if(grid[0][0]->cardID == 7)
+            // {
+            //     std::cout<<"DEBUG";
+            // }
 
             if (insideCornersMatch(match, row, col, grid))
             {
                 addToGrid(match, row, col, grid, usedCards);
                 incrementRowAndCol(row, col);
+                
                 fillGrid(row, col, grid, usedCards);
+                
+                decrementRowAndCol(row,col);
+                eraseFromGrid(match, row, col, grid, usedCards);
                 break;
             }
 

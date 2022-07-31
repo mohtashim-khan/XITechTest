@@ -14,7 +14,7 @@ int main()
 
     Grid *partAGrid = new Grid(partA_args, 2);
 
-    partAGrid->solve();
+    //partAGrid->solve();
 
 
 
@@ -36,7 +36,7 @@ int main()
 
     Grid *partBGrid = new Grid(partB_args, 3);
 
-    //partBGrid->solve();
+    partBGrid->solve();
 
     return EXIT_SUCCESS;
 
