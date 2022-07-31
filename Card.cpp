@@ -14,12 +14,14 @@ Card::Card(SymbolTypes top, SymbolTypes right, SymbolTypes bottom, SymbolTypes l
 void Card::rotateClockWise(int n)
 {
     while (n > 3)
-    {
         n-=4;
-    }
 
     std::rotate(symbolPositions.rbegin(), symbolPositions.rbegin() + n, symbolPositions.rend());
-    rotationCount = (rotationCount >= 3) ? 0 : rotationCount+1;
+    rotationCount += n;
+
+    while(rotationCount > 3)
+        rotationCount-=4;
+
 
 
 }

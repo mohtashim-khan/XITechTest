@@ -3,6 +3,8 @@
 int main()
 {
     //Part A
+    std::cout<<" ****** PART A: ******\n\n";
+
     std::set<Card*> partA_args;
 
     partA_args.insert(new Card(DOUBLEARROWBOTTOM, SINGLETRIANGLEBOTTOM, DOUBLETRIANGLETOP, SINGLEARROWTOP, 4));
@@ -14,8 +16,9 @@ int main()
 
     Grid *partAGrid = new Grid(partA_args, 2);
 
-    //partAGrid->solve();
+    partAGrid->solve();
 
+    std::cout<<"\n\n ****** PART B: ******\n\n";
 
 
 
