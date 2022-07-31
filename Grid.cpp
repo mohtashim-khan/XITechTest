@@ -1,6 +1,6 @@
 #include "Grid.hpp"
 
-Grid::Grid(std::vector<Card *> &cards, int n)
+Grid::Grid(std::set<Card *> &cards, int n)
 {
     totalCards = n * n;
     if (cards.size() != totalCards)
@@ -41,7 +41,7 @@ void Grid ::fillSymbolMap()
     {
         for (auto &symbol : card->symbolPositions)
         {
-            symbolMap[symbol].push_back(card);
+            symbolMap[symbol].insert(card);
         }
     }
 }
@@ -68,20 +68,53 @@ bool Grid::insideCornersMatch(Card *currentCard, int row, int col)
     return true;
 }
 
-std::vector<Card *> Grid::findPotentialMatches(int row, int col)
+std::set<Card *> Grid::findPotentialMatches(int row, int col)
 {
     Card *bottomCard = (row + 1 < grid.size()) ? grid[row + 1][col] : nullptr;
     Card *topCard = (0 <= row - 1) ? grid[row - 1][col] : nullptr;
     Card *leftCard = (0 <= col - 1) ? grid[row][col - 1] : nullptr;
     Card *rightCard = (col + 1 < grid[row].size()) ? grid[row][col + 1] : nullptr;
 
+    std::set<Card *> topSet;
+    std::set<Card *> leftSet;
+    std::set<Card *> rightSet;
+    std::set<Card *> bottomSet;
+    std::set<Card *> resSet = availableCards;
+
     if (topCard)
     {
+        topSet = symbolMap.at(topCard->oppositeSymbol(BOTTOM));
+        resSet = setIntersection(topSet, resSet);
     }
+
+    if (leftCard)
+    {
+        leftSet = symbolMap.at(leftCard->oppositeSymbol(RIGHT));
+        resSet = setIntersection(leftSet,resSet);
+    }
+
+    if (rightCard)
+    {
+        rightSet = symbolMap.at(rightCard->oppositeSymbol(LEFT));
+        resSet = setIntersection(rightSet, resSet);
+    }
+
+    if (bottomCard)
+    {
+        bottomSet = symbolMap.at(bottomCard->oppositeSymbol(TOP));
+        resSet = setIntersection(bottomSet, resSet);
+    }
+
+    return resSet;
 }
 
 void Grid ::addToGrid(Card *card, int row, int col)
 {
+    if (grid[row][col] != nullptr)
+    {
+        std::cerr << "ERROR: OVERWRITING ALREADY WRITTEN GRID POSITION at row: " << row << " col: " << col << "\n";
+        exit(EXIT_FAILURE);
+    }
     grid[row][col] = card;
     usedCards.insert(card);
 }
@@ -117,48 +150,46 @@ void Grid ::resetGrid(int &row, int &col)
 
 void Grid ::fillGrid(int row, int col)
 {
-    if(usedCards.size() == totalCards)
-        return;
-    
-    
-    
-    
-    
-    
-    while (usedCards.size() != totalCards) // while all available cards are not used
+    if (usedCards.size() == totalCards) // If all cards are used then this is a valid solution, print out the output
     {
-        std::vector<Card *> matches = findPotentialMatches();
+        printGrid();
+        return;
+    }
 
-        if (matches.empty())
-            break;
+    std::set<Card *> matches = findPotentialMatches(row, col);
 
-        for (auto &match : matches)
+    for (auto &match : matches)
+    {
+        if(usedCards.find(match) != usedCards.end())
+            continue;
+
+        for (int matchRotation = 0; matchRotation < 4; matchRotation++)
         {
-
-            for (int matchRotation = 0; matchRotation < 4; matchRotation++)
+            if (insideCornersMatch(match, row, col))
             {
-                if (insideCornersMatch(match))
-                {
-                    addToGrid(match);
-                    break;
-                }
-
-                match->rotateClockWise(1);
+                addToGrid(match, row, col);
+                incrementRowAndCol(row, col);
+                fillGrid(row, col);
+                break;
             }
+
+            match->rotateClockWise(1);
         }
     }
 }
 
-/*
-    For each available card in each rotation, add it as the main initial card which will be located at 0,0.
-    After adding the main card, match the rest of the cards with the symbols on the main card in order, for example the next card will be added at 0,1 and will
+std::set<Card*> Grid :: setIntersection(std::set<Card*> &s1, std::set<Card*> &s2)
+{
+    std::set<Card*> intersect;
+    std::set_intersection(s1.begin(), s1.end(), s2.begin(), s2.end(),
+                     std::inserter(intersect, intersect.begin()));
+    return intersect;
+}
 
-*/
 void Grid::solve()
 {
     int row = 0;
     int col = 0;
-
     for (auto &card : availableCards)
     {
         for (int rotation = 0; rotation < 4; rotation++)
@@ -167,9 +198,6 @@ void Grid::solve()
             incrementRowAndCol(row, col);
 
             fillGrid(row, col);
-
-            if (usedCards.size() == totalCards)
-                printGrid();
 
             resetGrid(row, col);
             card->rotateClockWise(1);
