@@ -175,6 +175,8 @@ void Grid ::fillGrid(int row, int col, std::vector<std::vector<Card *>> grid, st
 
         for (int matchRotation = 0; matchRotation < 4; matchRotation++)
         {
+            match->rotateClockWise(matchRotation);
+
             if (insideCornersMatch(match, row, col, grid))
             {
                 addToGrid(match, row, col, grid, usedCards);
@@ -186,8 +188,6 @@ void Grid ::fillGrid(int row, int col, std::vector<std::vector<Card *>> grid, st
                 eraseFromGrid(match, row, col, grid, usedCards);
                 break;
             }
-
-            match->rotateClockWise(1);
         }
     }
 }
@@ -200,6 +200,12 @@ std::set<Card *> Grid ::setIntersection(std::set<Card *> &s1, std::set<Card *> &
     return intersect;
 }
 
+void Grid::resetCards()
+{
+    for(auto &card : availableCards)
+        card->reset();
+}
+
 void Grid::solve()
 {
     int row = 0;
@@ -209,16 +215,18 @@ void Grid::solve()
 
     for (auto &card : availableCards)
     {
-        for (int rotation = 1; rotation < 4; rotation++)
+        for (int rotation = 0; rotation < 4; rotation++)
         {
+
+            card->rotateClockWise(rotation);
             addToGrid(card, row, col, grid, usedCards);
             incrementRowAndCol(row, col);
 
             fillGrid(row, col, grid, usedCards);
 
-            decrementRowAndCol(row,col);
+            resetCards();
+            decrementRowAndCol(row, col);
             eraseFromGrid(card, row, col, grid, usedCards);
-            card->rotateClockWise(rotation);
         }
     }
 }
