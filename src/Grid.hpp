@@ -23,7 +23,6 @@ class Grid
     void decrementRowAndCol(int &row, int &col);
     void addToGrid(Card *card, int row, int col, std::vector<std::vector<Card*>> &grid, std::unordered_set<Card*> &usedCards);
     void eraseFromGrid(Card *card, int row, int col, std::vector<std::vector<Card*>> &grid, std::unordered_set<Card*> &usedCards);
-    void resetGrid(int &row, int &col, std::vector<std::vector<Card*>> &grid, std::unordered_set<Card*> &usedCards);
     void fillSymbolMap();
     void fillGrid(int row, int col, std::vector<std::vector<Card*>> grid, std::unordered_set<Card*> usedCards);
     bool insideCornersMatch(Card* currentCard, int row, int col, std::vector<std::vector<Card*>> &grid);

@@ -157,23 +157,6 @@ void Grid ::decrementRowAndCol(int &row, int &col)
     }
 }
 
-void Grid ::resetGrid(int &row, int &col, std::vector<std::vector<Card *>> &grid, std::unordered_set<Card *> &usedCards)
-{
-    for (int i = 0; i < grid.size(); i++)
-    {
-        for (int j = 0; j < grid[i].size(); j++)
-        {
-            if (grid[i][j])
-                grid[i][j]->reset();
-
-            grid[i][j] = nullptr;
-        }
-    }
-    usedCards.clear();
-    row = 0;
-    col = 0;
-}
-
 void Grid ::fillGrid(int row, int col, std::vector<std::vector<Card *>> grid, std::unordered_set<Card *> usedCards)
 {
 
@@ -233,10 +216,9 @@ void Grid::solve()
 
             fillGrid(row, col, grid, usedCards);
 
-            resetGrid(row, col, grid, usedCards);
+            decrementRowAndCol(row,col);
+            eraseFromGrid(card, row, col, grid, usedCards);
             card->rotateClockWise(rotation);
         }
-
-        resetGrid(row, col, grid, usedCards);
     }
 }
