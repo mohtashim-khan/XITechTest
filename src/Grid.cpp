@@ -37,6 +37,9 @@ void Grid::printGrid(std::vector<std::vector<Card *>> &grid)
     }
 }
 
+/*
+    Populates symbol map
+*/
 void Grid ::fillSymbolMap()
 {
     for (auto &card : availableCards)
@@ -48,6 +51,9 @@ void Grid ::fillSymbolMap()
     }
 }
 
+/*
+    Returns true if all inner edges match for a card, otherwise false
+*/
 bool Grid::insideCornersMatch(Card *currentCard, int row, int col, std::vector<std::vector<Card *>> &grid)
 {
     Card *bottomCard = (row + 1 < grid.size()) ? grid[row + 1][col] : nullptr;
@@ -70,6 +76,9 @@ bool Grid::insideCornersMatch(Card *currentCard, int row, int col, std::vector<s
     return true;
 }
 
+/*
+    Returns a set of potential card matches at Row and Col of grid by using sets and intersections and the Symbol map
+*/
 std::set<Card *> Grid::findPotentialMatches(int row, int col, std::vector<std::vector<Card *>> &grid)
 {
     Card *bottomCard = (row + 1 < grid.size()) ? grid[row + 1][col] : nullptr;
@@ -110,6 +119,9 @@ std::set<Card *> Grid::findPotentialMatches(int row, int col, std::vector<std::v
     return resSet;
 }
 
+/*
+    Adds card at Row and Col of grid
+*/
 void Grid ::addToGrid(Card *card, int row, int col, std::vector<std::vector<Card *>> &grid, std::unordered_set<Card *> &usedCards)
 {
     if (grid[row][col] != nullptr)
@@ -121,6 +133,9 @@ void Grid ::addToGrid(Card *card, int row, int col, std::vector<std::vector<Card
     usedCards.insert(card);
 }
 
+/*
+    Erases card at Row and Col of grid
+*/
 void Grid ::eraseFromGrid(Card *card, int row, int col, std::vector<std::vector<Card *>> &grid, std::unordered_set<Card *> &usedCards)
 {
     if (grid[row][col] == nullptr)
@@ -133,6 +148,9 @@ void Grid ::eraseFromGrid(Card *card, int row, int col, std::vector<std::vector<
     usedCards.erase(card);
 }
 
+/*
+    Incrementes Row and Col of grid by reference
+*/
 void Grid ::incrementRowAndCol(int &row, int &col)
 {
     col++;
@@ -145,6 +163,9 @@ void Grid ::incrementRowAndCol(int &row, int &col)
     }
 }
 
+/*
+    Decrements Row and Col of grid by reference
+*/
 void Grid ::decrementRowAndCol(int &row, int &col)
 {
     col--;
@@ -165,28 +186,28 @@ void Grid ::fillGrid(int row, int col, std::vector<std::vector<Card *>> grid, st
         printGrid(grid);
         return;
     }
+    
+    std::set<Card *> matches = findPotentialMatches(row, col, grid);    //Find potential Card matches for the given row and col that has symbols that match the existing grid
 
-    std::set<Card *> matches = findPotentialMatches(row, col, grid);
-
-    for (auto &match : matches)
+    for (auto &match : matches) //Iterate through each match that was found
     {
-        if (usedCards.find(match) != usedCards.end())
+        if (usedCards.find(match) != usedCards.end())   //If a potential Match is already in the grid then continue to next match
             continue;
 
-        for (int matchRotation = 0; matchRotation < 4; matchRotation++)
+        for (int matchRotation = 0; matchRotation < 4; matchRotation++) //Rotate the potential matching card until all inside corners match, if no inside corners match move on to next match
         {
-            match->rotateClockWise(matchRotation);
+            match->rotateClockWise(1);
 
             if (insideCornersMatch(match, row, col, grid))
             {
-                addToGrid(match, row, col, grid, usedCards);
+                addToGrid(match, row, col, grid, usedCards);    //Add Card to grid at row,col if corners match
                 incrementRowAndCol(row, col);
 
-                fillGrid(row, col, grid, usedCards);
+                fillGrid(row, col, grid, usedCards);            //Recursively call fillGrid to fill the rest of the grid after incrementing row and col
 
-                decrementRowAndCol(row, col);
-                eraseFromGrid(match, row, col, grid, usedCards);
-                break;
+                decrementRowAndCol(row, col);           
+                eraseFromGrid(match, row, col, grid, usedCards); // Remove added match for potential future matches.
+                break;                                           // stops any further rotation of removed match
             }
         }
     }
@@ -210,10 +231,10 @@ void Grid::solve()
 {
     int row = 0;
     int col = 0;
-    std::unordered_set<Card *> usedCards;
+    std::unordered_set<Card *> usedCards;   //Initialize an empty usedCards set
     std::vector<std::vector<Card *>> grid(sideSize, std::vector<Card *>(sideSize)); // Make empty nxn grid
 
-    for (auto &card : availableCards)
+    for (auto &card : availableCards)       //For each available card, insert every rotation into the grid as the intial set.
     {
         for (int rotation = 0; rotation < 4; rotation++)
         {
@@ -224,7 +245,7 @@ void Grid::solve()
 
             fillGrid(row, col, grid, usedCards);
 
-            resetCards();
+            resetCards();                   //Resets cards to initial state
             decrementRowAndCol(row, col);
             eraseFromGrid(card, row, col, grid, usedCards);
         }

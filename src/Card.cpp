@@ -11,21 +11,23 @@ Card::Card(SymbolTypes top, SymbolTypes right, SymbolTypes bottom, SymbolTypes l
     cardID = id;
 }
 
+/*
+    Rotates Card clockwise by n times, also updates the symbol positions
+*/
 void Card::rotateClockWise(int n)
 {
     while (n > 3)
-        n-=4;
+        n -= 4;
 
     std::rotate(symbolPositions.rbegin(), symbolPositions.rbegin() + n, symbolPositions.rend());
     rotationCount += n;
 
-    while(rotationCount > 3)
-        rotationCount-=4;
-
-
-
+    while (rotationCount > 3)
+        rotationCount -= 4;
 }
-
+/*
+    Resets Card to initial state by rotating anti-clockwise by rotation count
+*/
 void Card::reset()
 {
     std::rotate(symbolPositions.begin(), symbolPositions.begin() + rotationCount, symbolPositions.end());
@@ -38,45 +40,48 @@ void Card::printPositions()
         std::cout << pos << " ";
     std::cout << "\n";
 }
-
-SymbolTypes Card :: oppositeSymbol(Directions direction)
+/*
+    Returns the opposite Symbol (or Required symbol) for a given position in the card(TOP,LEFT,BOTTOM,RIGHT). 
+    Useful for finding and verifying matching cards.
+*/
+SymbolTypes Card ::oppositeSymbol(Directions direction)
 {
 
     SymbolTypes symbol = symbolPositions[direction];
-    
-    switch(symbol)
+
+    switch (symbol)
     {
-        case DOUBLETRIANGLETOP:
-            return DOUBLETRIANGLEBOTTOM;
-            break;
+    case DOUBLETRIANGLETOP:
+        return DOUBLETRIANGLEBOTTOM;
+        break;
 
-        case DOUBLETRIANGLEBOTTOM:
-            return DOUBLETRIANGLETOP;
-            break;
-        
-        case SINGLETRIANGLETOP:
-            return SINGLETRIANGLEBOTTOM;
-            break;
-        
-        case SINGLETRIANGLEBOTTOM:
-            return SINGLETRIANGLETOP;
-            break;
+    case DOUBLETRIANGLEBOTTOM:
+        return DOUBLETRIANGLETOP;
+        break;
 
-        case DOUBLEARROWTOP:
-            return DOUBLEARROWBOTTOM;
-            break;
+    case SINGLETRIANGLETOP:
+        return SINGLETRIANGLEBOTTOM;
+        break;
 
-        case DOUBLEARROWBOTTOM:
-            return DOUBLEARROWTOP;
-            break;
-        
-        case SINGLEARROWTOP:
-            return SINGLEARROWBOTTOM;
-            break;
-        
-        case SINGLEARROWBOTTOM:
-            return SINGLEARROWTOP;
-            break;
+    case SINGLETRIANGLEBOTTOM:
+        return SINGLETRIANGLETOP;
+        break;
+
+    case DOUBLEARROWTOP:
+        return DOUBLEARROWBOTTOM;
+        break;
+
+    case DOUBLEARROWBOTTOM:
+        return DOUBLEARROWTOP;
+        break;
+
+    case SINGLEARROWTOP:
+        return SINGLEARROWBOTTOM;
+        break;
+
+    case SINGLEARROWBOTTOM:
+        return SINGLEARROWTOP;
+        break;
     }
 
     return DOUBLEARROWBOTTOM;
