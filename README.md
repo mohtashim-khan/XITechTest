@@ -8,7 +8,7 @@
 - If CMake is not installed I can send the binary via email if need be, or release it here
 ## Design General Overview
 
-When tackling this problem, I wanted to create an algorithm that could be used for any NxN grid and was effecient enough to return ALL the correct results almost instantly. I was able to achieve this through the smart use of maps, sets, and recursion. The major problem with this challenge was the sheer amount of possible card positions and rotations there were and to figure out a way to find the solutions without brute forcing the algorithm.
+When tackling this problem, I wanted to create an algorithm that could be used for any NxN grid and was efficient enough to return ALL the correct results almost instantly. I was able to achieve this through the smart use of maps, sets, and recursion. The major problem with this challenge was the sheer amount of possible card positions and rotations there were and to figure out a way to find the solutions without brute forcing the algorithm.
 
 There are two classes defined in the program, a Card class for representing the individual cards and a Grid class for representing the NxN grid. The Card class defines an individual card by recording it's identifier, symbol positions, and how many times it has been rotated clockwise. The Card class also contains various enums and helper functions related to manipulating a single card. 
 
@@ -16,7 +16,7 @@ The Grid class represents the NxN problem that needs to be solved. The Grid clas
 
 ## Solving The Grid
 ### solve()
- The solve() function intializes an empty grid of NxN then for each available card inserts the card into the first position then calls the fillGrid() recursive function. After calling the fillGrid() function, it then removes the inserted card from the grid, rotates it, then places it back into the grid and calls the fillGrid() function again. This way all intial states are covered by the solution and the fillGrid() function can handle the rest.
+ The solve() function initializes an empty grid of NxN then for each available card inserts the card into the first position then calls the fillGrid() recursive function. After calling the fillGrid() function, it then removes the inserted card from the grid, rotates it, then places it back into the grid and calls the fillGrid() function again. This way all initial states are covered by the solution and the fillGrid() function can handle the rest.
 
 ### fillGrid()
 The fillGrid() function as the name implies, is a recursive function that fills the rest of the grid based on a current grid condition. The way it does this is by calling the findPotentialMatches() function which matches the existing symbols on the grid for a given position with a set of matching Cards that have the required symbols on them (via the symbol map). Then for each matching card, it then rotates the card until all inner edges of the current grid are valid (verified using the insideCornersMatch() function), after which it adds the card to the grid and does a recursive call to fillGrid() for the next empty position in the grid. If all positions are filled in the grid, it would then know its a valid solution and prints out the output. If no matches are found for a given position, it would simply return and do nothing.
