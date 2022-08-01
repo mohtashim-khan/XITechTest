@@ -5,7 +5,7 @@
 - Program utilizes CMake, to build use command : cmake --build build
 - To run, use command : ./build/TechTest
 
-- If CMake is not installed I can send the binary via email if need be, or release it here
+- I can also send the executable via email if need be, or release it here
 ## Design General Overview
 
 When tackling this problem, I wanted to create an algorithm that could be used for any NxN grid and was efficient enough to return ALL the correct results almost instantly. I was able to achieve this through the smart use of maps, sets, and recursion. The major problem with this challenge was the sheer amount of possible card positions and rotations there were and to figure out a way to find the solutions without brute forcing the algorithm.
